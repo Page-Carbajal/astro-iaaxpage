@@ -1,16 +1,8 @@
-# Astro Starter Kit: Basics
+# iaaxpage.com – Static Site Generation with Astro and WordPress
 
-```
-npm create astro@latest -- --template basics
-```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+![thumbnail](private/thumbnail.png)
 
 
 ## 🚀 Project Structure
@@ -23,33 +15,41 @@ Inside of your Astro project, you'll see the following folders and files:
 │   └── favicon.svg
 ├── src/
 │   ├── components/
-│   │   └── Card.astro
+│   │   └── home-components
+│   │       └── ArticleCard.astro
+│   │       └── FeaturedArticle.astro
+│   │       └── SiteInfo.astro
+│   │   └── post-components
+│   │       └── PostHero.astro
+│   │   └── Footer.astro
 │   ├── layouts/
 │   │   └── Layout.astro
 │   └── pages/
 │       └── index.astro
+│       └── articulos
+│           └── [slug].astro
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## How to install
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. You will need a WordPress website with some published posts and Graphql installed
+2. Clone the branch **article** from this repository
+3. Create a new .env file and add these variables
 
-Any static assets, like images, can be placed in the `public/` directory.
+```env
+WP_GRAPQL_URL=https://yoursite.tld/graphql
+FEATURED_ARTICLES_CATEGORY_ID=44
+HOME_URL=http://localhost:3000
+```
 
-## 🧞 Commands
+### Execute the following commands
 
-All commands are run from the root of the project, from a terminal:
+```bash
+$ yarn install
+$ yarn build
+$ yarn preview 
+```
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
+Visit http://localhost:3000
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
