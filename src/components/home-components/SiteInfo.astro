@@ -1,0 +1,17 @@
+---
+export interface SiteInfo{
+  title: string;
+  description: string;
+  quote?: string;
+}
+
+const {title, description, quote} = Astro.props;
+---
+
+<div class="container px-4 mx-auto">
+  <div class="max-w-2xl mx-auto mb-16 text-center">
+    <h1 class="text-blue-400 uppercase font-semibold tracking-widest">{title}</h1>
+    <h2 class="my-5 text-4xl font-bold font-heading text-blue-800">{description}</h2>
+    <p class="text-lg text-gray-500">{quote}</p>
+  </div>
+</div>

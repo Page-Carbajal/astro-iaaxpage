@@ -1,0 +1,25 @@
+---
+export interface FeaturedArticle{
+  title: string;
+  slug: string;
+  featuredIamge?: string;
+  shortContent: string;
+}
+
+const { title, slug, featuredImage, shortContent } = Astro.props
+---
+
+<section id="featuredArticle" class="py-28 bg-black bg-no-repeat bg-center bg-cover bg-fixed overflow-hidden" style={{backgroundIamge: `url('${featuredImage}')`}}>
+  <div class="container px-4 mx-auto">
+    <div class="px-12 pt-12 pb-9 bg-black bg-opacity-80 rounded-4xl" style="backdrop-filter: blur(10px);">
+      <h2 class="mb-4 text-6xl md:text-7xl text-white font-bold font-heading tracking-px-n leading-tight">{title}</h2>
+      <p class="mb-11 text-lg text-gray-400 font-medium leading-normal">{shortContent}</p>
+      <a class="inline-flex flex-wrap items-center text-white hover:text-gray-200" href={`articulos/${slug}`}>
+        <span class="mr-2 font-semibold leading-normal">Leer art&iacute;culo</span>
+        <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 3.75L16.25 9M16.25 9L11 14.25M16.25 9L2.75 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
