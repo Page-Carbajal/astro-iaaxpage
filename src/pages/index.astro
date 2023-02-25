@@ -1,10 +1,21 @@
 ---
+import { formatDate, getLatestPublishedPosts, getTextFromHtml } from '../lib/api';
 import Footer from '../components/Footer.astro';
 import ArticleCard from '../components/home-components/ArticleCard.astro';
 import FeaturedArticle from '../components/home-components/FeaturedArticle.astro';
 import SiteInfo from '../components/home-components/SiteInfo.astro';
 import Layout from '../layouts/Layout.astro';
+
+const response = await getLatestPublishedPosts();
+const posts = response?.nodes?.map( (p: any)=> {
+  p.shortContent =  getTextFromHtml(p.excerpt ?? p.content);
+  p.formattedDate = formatDate(p.date);
+
+  return p;
+});
+
 ---
+
 
 <Layout title="Iaax Page">
 
@@ -15,20 +26,20 @@ import Layout from '../layouts/Layout.astro';
 			description="Blog de Desarrollo Personal"
 			quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
 			/>
-			<FeaturedArticle
-			title="Super awesome article"
-			shortContent="This is the best article I ever written. And that's considering I am awesome."
-			slug="#"
-			/>
+			<FeaturedArticle />
 			<section class="py-24">
 				<div class="container px-4 mx-auto">
 					<div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12">
-						<ArticleCard
-						title="Article 1"
-						content="Some content"
-						slug="#"
-						date="12 Feb, 2023. 19:00"
-						/>
+
+						{posts.map((post: any) => (
+							<ArticleCard
+							title={post.title}
+							content={post.shortContent}
+							slug={post.slug}
+							date={post.formattedDate}
+							/>
+						))}
+
 					</div>
 				</div>
 			</section>
