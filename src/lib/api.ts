@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const GRAPHQL_URL = process.env.WP_GRAPQL_URL ?? undefined;
+const FEATURED_CATEGORY_ID = process.env.FEATURED_ARTICLES_CATEGORY_ID ?? 0;
+
 
 async function fetchAPI(query: string, { variables }:any = {}) {
 
@@ -69,7 +71,7 @@ export async function getSiteInfo(): Promise<{title: string, description: string
 export async function getAllPublishedPostsSlugs() {
   const data = await fetchAPI(`
   {
-    posts(where: {status: PUBLISH}, first: 6) {
+    posts(where: {status: PUBLISH}, first: 1000) {
       edges {
         node {
           slug
@@ -136,7 +138,7 @@ export async function getLatestPublishedPosts() {
 export async function getLatestFeaturedArticle() {
   const data = await fetchAPI(`
   {
-    posts(where: {orderby: {field: DATE, order: DESC}, categoryId: 44}, first: 1) {
+    posts(where: {orderby: {field: DATE, order: DESC}, categoryId: ${FEATURED_CATEGORY_ID}, status: PUBLISH}, first: 1) {
       nodes {
         id
         date
@@ -161,5 +163,5 @@ export async function getLatestFeaturedArticle() {
   }  
   `);
 
-  return data?.posts?.nodes[0] ?? undefined;
+  return data?.posts?.nodes?.length > 0 ? data.posts.nodes[0] : undefined;
 }

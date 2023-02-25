@@ -11,7 +11,7 @@ import { getLatestFeaturedArticle, getTextFromHtml } from "../../lib/api";
 // const { title, slug, featuredImage, shortContent } = Astro.props
 
 const article = await getLatestFeaturedArticle();
-const shortContent = getTextFromHtml(article?.content);
+const shortContent = getTextFromHtml(article?.content ?? '');
 ---
 
 <>
