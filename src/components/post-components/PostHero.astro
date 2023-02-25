@@ -1,0 +1,16 @@
+---
+interface PostHero {
+  imageUrl: string;
+  altText?: string;
+}
+
+const {imageUrl, altText} = Astro.props;
+
+---
+<div class="h-64 lg:h-144 mb-12">
+  <img 
+  class="w-full h-full object-cover" 
+  src={imageUrl} 
+  alt={altText ?? ''} />
+</div>
+
