@@ -2,6 +2,7 @@
 
 ### February 25th 
 
+- Implemented poemas/ route and entries
 - Added robots.txt to prevent listing as duplicated content while developing
 - Added styles for UL
 - Added styles/post

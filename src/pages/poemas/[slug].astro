@@ -5,7 +5,6 @@ import PostHero from '../../components/post-components/PostHero.astro';
 import Footer from '../../components/Footer.astro';
 import { formatDate, getAllPublishedPostsSlugs, getPostBySlug } from '../../lib/api';
 import "../../styles/post.css";
-import "../../styles/lists.css";
 
 dotenv.config();
 
@@ -13,7 +12,7 @@ const homeUrl = process.env.HOME_URL;
 
 
 export async function getStaticPaths() {
-  const postSlugs = await getAllPublishedPostsSlugs();
+  const postSlugs = await getAllPublishedPostsSlugs(false);
 
   return postSlugs.edges.map(({ node }: any) => {
     return {
@@ -33,6 +32,12 @@ const formattedDate = formatDate(post.date);
       <div class="max-w-2xl mb-12 mx-auto text-center">
         <div class="flex items-center justify-center mb-6 text-xs text-blue-500 font-semibold uppercase">
           <a href={homeUrl}>Iaax Page</a>
+          <span class="inline-block mx-2">
+            <svg class="text-blue-500 h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
+            </svg>
+          </span>
+          <a href="/poemas">Poemas</a>
           <span class="inline-block mx-2">
             <svg class="text-blue-500 h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
