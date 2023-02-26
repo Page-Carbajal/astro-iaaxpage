@@ -4,6 +4,8 @@ dotenv.config();
 
 const GRAPHQL_URL = process.env.WP_GRAPQL_URL ?? undefined;
 const FEATURED_CATEGORY_ID = process.env.FEATURED_ARTICLES_CATEGORY_ID ?? 0;
+const ARTICLES_CATEGORY_ID = process.env.ARTICLES_CATEGORY_ID ?? 0;
+const POEMS_CATEGORY_ID = process.env.POEMS_CATEGORY_ID ?? 0;
 
 
 async function fetchAPI(query: string, { variables }:any = {}) {
@@ -68,10 +70,13 @@ export async function getSiteInfo(): Promise<{title: string, description: string
 }
 
 
-export async function getAllPublishedPostsSlugs() {
+export async function getAllPublishedPostsSlugs(articles: boolean = true) {
+
+  const categoryId = articles ? ARTICLES_CATEGORY_ID : POEMS_CATEGORY_ID;
+
   const data = await fetchAPI(`
   {
-    posts(where: {status: PUBLISH}, first: 1000) {
+    posts(where: {status: PUBLISH, categoryId: ${categoryId}}, first: 1000) {
       edges {
         node {
           slug
@@ -113,11 +118,12 @@ export async function getPostBySlug(slug: string) {
 }
 
 
-export async function getLatestPublishedPosts() {
+export async function getLatestPublishedPosts(articles: boolean = true) {
+  const categoryId = articles ? ARTICLES_CATEGORY_ID : POEMS_CATEGORY_ID;
 
   const data = await fetchAPI(`
   {
-    posts(first: 100, where: {status: PUBLISH}) {
+    posts(first: 100, where: {status: PUBLISH, categoryId: ${categoryId}}) {
       nodes {
         databaseId
         date
