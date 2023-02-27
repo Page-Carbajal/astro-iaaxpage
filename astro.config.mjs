@@ -20,13 +20,15 @@ export default defineConfig({
     config: {}
   }), image(), sitemap({
     i18n: {
-      defaultLocale: 'es'
+      defaultLocale: 'es',
+      locales: {
+        es: 'ex-MX'
+      }
     },
-    serialize(page) {
-      console.log('Page: ', page);
-      
-      return page;
-    }
+    // lastmod: Intl.DateTimeFormat('en', {dateStyle: "short"}).format(new Date()),
+    changefreq: 'weekly',
+    lastmod: new Date(),
+    entryLimit: 100
   }), partytown({
     config: {
       forward: ["dataLayer.push"]
