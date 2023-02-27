@@ -1,5 +1,11 @@
 # Iaax Page Website - Change Log
 
+### February 26th 
+
+- Added support for partytown
+- Added support for sitemap
+
+
 ### February 25th 
 
 - Implemented poemas/ route and entries
