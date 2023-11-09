@@ -140,11 +140,42 @@ export async function getLatestPublishedPosts(articles: boolean = true) {
 }
 
 
-
 export async function getLatestFeaturedArticle() {
   const data = await fetchAPI(`
   {
     posts(where: {orderby: {field: DATE, order: DESC}, categoryId: ${FEATURED_CATEGORY_ID}, status: PUBLISH}, first: 1) {
+      nodes {
+        id
+        date
+        slug
+        title
+        content
+        featuredImage {
+          node {
+            date
+            slug
+            altText
+            caption
+            sourceUrl
+            guid
+            fileSize
+            mediaType
+            mimeType
+          }
+        }  
+      }
+    }
+  }  
+  `);
+
+  return data?.posts?.nodes?.length > 0 ? data.posts.nodes[0] : undefined;
+}
+
+
+export async function getPoems() {
+  const data = await fetchAPI(`
+  {
+    posts(where: {categoryName: "poemas"}) {
       nodes {
         id
         date
