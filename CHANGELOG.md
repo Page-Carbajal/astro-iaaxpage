@@ -1,5 +1,11 @@
 # Iaax Page Website - Change Log
 
+### December 29th 
+
+- Added components ArticleHeader
+- Implemented styles for article header animation
+
+
 ### February 26th 
 
 - Added support for partytown
