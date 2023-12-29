@@ -1,0 +1,30 @@
+---
+export interface Props {
+  title: string;
+  publishDate?: string;
+  homeUrl?: string;
+}
+
+const {title, publishDate, homeUrl} = Astro.props;
+---
+
+<header class="heroHeader waveAnimation7sOnce px-4 mx-auto text-gray-300 bg-blue-800">
+    <ul class="flex items-center justify-center mb-6 text-sm font-semibold uppercase pt-11">
+        <li class="px-2">
+            <a href={homeUrl}>Iaax Page</a>
+        </li>
+        <li class="px-2">
+            <svg class="h-4 w-4" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
+            </svg>
+        </li>
+        <li class="px-2">
+          {title}
+        </li>
+    </ul>
+
+    <div class="heroTitle">
+        <h1 class="articleTitle text-4xl">{title}</h1>
+        <div class="heroArticleDatePulishedAt text-sm pt-7">{publishDate}</div>
+    </div>
+</header>

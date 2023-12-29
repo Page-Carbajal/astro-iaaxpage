@@ -5,7 +5,8 @@ import PostHero from '../../components/post-components/PostHero.astro';
 import Footer from '../../components/Footer.astro';
 import { formatDate, getAllPublishedPostsSlugs, getPostBySlug } from '../../lib/api';
 import "../../styles/post.css";
-import "../../styles/lists.css";
+// import "../../styles/lists.css";
+import ArticleHeader from "../../components/post-components/ArticleHeader.astro";
 
 dotenv.config();
 
@@ -26,39 +27,17 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const post = await getPostBySlug(slug ?? '');
 const formattedDate = formatDate(post.date);
+const demoImage = 'https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&w=600';
 ---
 <Layout title={post.title}>
-  <article id={`article.${slug}`} class="py-24">
-    <div class="container px-4 mx-auto">
-      <div class="max-w-2xl mb-12 mx-auto text-center">
-        <div class="flex items-center justify-center mb-6 text-xs text-blue-500 font-semibold uppercase">
-          <a href={homeUrl}>Iaax Page</a>
-          <span class="inline-block mx-2">
-            <svg class="text-blue-500 h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
-            </svg>
-          </span>
-          <span>{post.title}</span>
-        </div>
-        <h1 class="mb-6 text-5xl text-blue-800 font-bold font-heading">{post.title}</h1>
-        <p class="text-blue-500 text-xs">{formattedDate}</p>
-        <!-- <div class="flex items-center justify-center">
-          <div class="mr-6">
-            <img class="w-14 h-14 object-cover" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt="">
-          </div>
-          <div class="text-left">
-            <h3 class="mb-2 text-lg text-gray-500 font-semibold font-heading">Sara Sampton</h3>
-            <p class="text-blue-500 text-xs">{formattedDate}</p>
-          </div>
-        </div> -->
-      </div>
-    </div>
-    {post?.featuredImage?.node?.guid && (
-      <PostHero
-      imageUrl={post?.featuredImage?.node?.guid}
-      altText={post?.featuredImage?.node?.altText}
-      />)}
-    <div class="container px-4 mx-auto">
+  <article id={`article.${slug}`} class="py-0">
+    <ArticleHeader title={post.title} publishDate={formattedDate} homeUrl={homeUrl} />
+    <!--{post?.featuredImage?.node?.guid && (-->
+    <!--  <PostHero-->
+    <!--  imageUrl={post?.featuredImage?.node?.guid}-->
+    <!--  altText={post?.featuredImage?.node?.altText}-->
+    <!--  />)}-->
+    <div class="container px-4 mx-auto pt-7">
       <article class="max-w-2xl mx-auto">
         <Fragment set:html= {post.content} />
       </article>
