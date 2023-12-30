@@ -7,6 +7,7 @@
 - Icons from 
   - https://icons8.com/icons/set/twitter-x
   - https://svgrepo.com
+- Upgraded astro to Version 4
 
 
 ### December 29th 
