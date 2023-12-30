@@ -4,6 +4,7 @@
 
 - Added components ArticleHeader
 - Implemented styles for article header animation
+- Implemented @tailwindcss/typography
 
 
 ### February 26th 

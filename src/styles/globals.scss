@@ -45,71 +45,17 @@ $gray-600: #52525B;
 $gray-700: #3F3F46;
 $gray-800: #27272A;
 $gray-900: #18181B;
+
+
 code {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
   Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 
-ul, ol {
-  line-height: 1.8;
-  margin-bottom: 25px;
-  list-style-position: outside;
+.prose h1, .prose h2, .prose h3, .prose h4{
+  color: $blue-800;
 }
-
-ol {
-  list-style: decimal;
-}
-
-ol li:before {
-  //counter-increment: item; /* Increment the value of section counter by 1 */
-  ////content: "Section " counter(section) ": "; /* Display counter value in default style (decimal) */
-  //content: counter(item) ": ";
-  background-color: $blueGray-800;
-  color: $gray-100;
-  font-weight: bold;
-  padding: 3px 8px;
-  border-radius: 16px;
-  position: relative;
-  left: -50px;
-}
-
-li ol {
-  margin-top: 7px;
-  padding: 7px 0 0 25px;
-  border-top: 1px solid $blueGray-50;
-  //counter-increment: section;
-  //content: counter(section) ": ";
-}
-
-//ol li:not(:last-child), ul li:not(:last-child) {
-//    margin-bottom: 20px;
-//}
-//
-//
-//ol li {
-//    list-style-type: none;
-//    counter-increment: item;
-//}
-//
-//ol li:before {
-//    content: counter(item);
-//    margin-right: 5px;
-//    font-size: 18px;
-//    background-color: $blueGray-800;
-//    color: $gray-100;
-//    font-weight: bold;
-//    padding: 3px 8px;
-//    border-radius: 16px;
-//}
-//
-//ol li ol {
-//    counter-increment: section
-//}
-//
-//ol ol li:before {
-//    content: counter(section);
-//}
 
 .heroHeader {
   text-align: center;

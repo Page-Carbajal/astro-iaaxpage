@@ -1,9 +1,6 @@
 ---
 import { formatDate, getLatestPublishedPosts, getTextFromHtml } from '../../lib/api';
-import Footer from '../../components/Footer.astro';
 import PoemsCard from '../../components/post-components/PoemsCard.astro';
-import FeaturedArticle from '../../components/home-components/FeaturedArticle.astro';
-import SiteInfo from '../../components/home-components/SiteInfo.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const response = await getLatestPublishedPosts(false);
@@ -32,7 +29,7 @@ const posts = response?.nodes?.map( (p: any)=> {
           title={post.title}
           slug={post.slug}
           />
-        ))}  
+        ))}
       </div>
       </div>
     </section>
@@ -42,11 +39,11 @@ const posts = response?.nodes?.map( (p: any)=> {
 
   <footer class="py-24 text-gray-800"><div class="container mx-auto px-4 mb-10">
     <div class="max-w-2xl mx-auto text-center">
-  
+
       <a class="inline-block mb-10 text-white text-lg font-semibold" href="https://iaaxpage.com" target="_blank">
         <img class="h-40" src="https://stele.iaaxpage.com/wp-content/uploads/sites/2/2020/12/iaax-page-logo-large-black-no-brackground.png" alt="Iaax Page - Photo Logo" width="auto">
       </a>
-  
+
       <ul class="mb-8 flex flex-wrap space-x-10 items-center justify-center text-sm">
         <li class="mb-2 md:mb-0">
           <a class="hover:text-blue-100" href="https://iaaxpage.com">Inicio</a>
@@ -67,6 +64,6 @@ const posts = response?.nodes?.map( (p: any)=> {
     </div>
     </div>
     <p class="text-center text-sm pt-8 px-4 border-t border-gray-400">Creado con <span class="text-red-400">♥</span> en Guadalajara; México.</p>
-  </footer>  
+  </footer>
 
 </Layout>

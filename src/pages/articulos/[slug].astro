@@ -20,7 +20,7 @@ export async function getStaticPaths() {
     return {
       params: { slug: node.slug },
     };
-  });  
+  });
 }
 
 
@@ -37,11 +37,11 @@ const demoImage = 'https://images.pexels.com/photos/2166711/pexels-photo-2166711
     <!--  imageUrl={post?.featuredImage?.node?.guid}-->
     <!--  altText={post?.featuredImage?.node?.altText}-->
     <!--  />)}-->
-    <div class="container px-4 mx-auto pt-7">
+    <div class="prose container px-4 mx-auto pt-7">
       <article class="max-w-2xl mx-auto">
         <Fragment set:html= {post.content} />
       </article>
-  
+
     </div>
   </article>
   <Footer />
