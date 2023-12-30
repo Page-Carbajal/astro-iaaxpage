@@ -1,5 +1,14 @@
 # Iaax Page Website - Change Log
 
+### December 30th 
+
+- Created component SocialShareButton
+- Created class socialShareButton.scss
+- Icons from 
+  - https://icons8.com/icons/set/twitter-x
+  - https://svgrepo.com
+
+
 ### December 29th 
 
 - Added components ArticleHeader
