@@ -9,19 +9,17 @@ const {title, publishDate, homeUrl} = Astro.props;
 ---
 
 <header class="heroHeader waveAnimation7sOnce px-4 mx-auto text-gray-300 bg-blue-800">
-    <ul class="flex items-center justify-center mb-6 text-sm font-semibold uppercase pt-11">
-        <li class="px-2">
-            <a href={homeUrl}>Iaax Page</a>
-        </li>
-        <li class="px-2">
-            <svg class="h-4 w-4" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
+    <a href={homeUrl} class="flex items-center justify-center mb-6 text-xs font-semibold uppercase pt-11 underline">
+        <span class="pr-2">
+            <svg class="h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path transform="rotate(180 3.9375 6)"
+                      d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
             </svg>
-        </li>
-        <li class="px-2">
-          {title}
-        </li>
-    </ul>
+        </span>
+        <span>
+            Iaax Page
+        </span>
+    </a>
 
     <div class="heroTitle">
         <h1 class="articleTitle text-4xl">{title}</h1>

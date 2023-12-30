@@ -48,6 +48,7 @@ export const getTextFromHtml = (html: string, wordCount: number = 20): string =>
   return truncatedText;
 }
 
+
 export const formatDate = (date: string) => {
   return Intl.DateTimeFormat('es-mx', {
     dateStyle: "medium",
