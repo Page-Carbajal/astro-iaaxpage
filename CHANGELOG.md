@@ -1,5 +1,14 @@
 # Iaax Page Website - Change Log
 
+### January 5th
+
+- Added src/config.ts lib/types.ts
+- Imported @page-carbajal/wp-graphql
+- Created articles/fuente.json.ts
+
+
+## 2023
+
 ### December 30th 
 
 - Created component SocialShareButton

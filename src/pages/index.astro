@@ -1,49 +1,42 @@
 ---
-import { formatDate, getLatestPublishedPosts, getTextFromHtml } from '../lib/api';
+import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import {getLatestPosts} from "../utils/wordpressClient";
+import SiteInfo from '../components/home-components/SiteInfo.astro';
 import ArticleCard from '../components/home-components/ArticleCard.astro';
 import FeaturedArticle from '../components/home-components/FeaturedArticle.astro';
-import SiteInfo from '../components/home-components/SiteInfo.astro';
-import Layout from '../layouts/Layout.astro';
 
-const response = await getLatestPublishedPosts();
-const posts = response?.nodes?.map( (p: any)=> {
-  p.shortContent =  getTextFromHtml(p.excerpt ?? p.content);
-  p.formattedDate = formatDate(p.date);
-
-  return p;
-});
-
+const posts = await getLatestPosts();
 ---
 
 
 <Layout title="Iaax Page">
 
-	<div class="wrapper">
-		<section class="py-24">
-			<SiteInfo 
-			title="Iaax Page"
-			description="Blog de Desarrollo Personal"
-			quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
-			/>
-			<FeaturedArticle />
-			<section class="py-24">
-				<div class="container px-4 mx-auto">
-					<div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12">
+    <div class="wrapper">
+        <section class="py-24">
+            <SiteInfo
+                    title="Iaax Page"
+                    description="Blog de Desarrollo Personal"
+                    quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
+            />
+            <FeaturedArticle/>
+            <section class="py-24">
+                <div class="container px-4 mx-auto">
+                    <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12">
 
-						{posts.map((post: any) => (
-							<ArticleCard
-							title={post.title}
-							content={post.shortContent}
-							slug={post.slug}
-							date={post.formattedDate}
-							/>
-						))}
+                      {posts.map((post: any) => (
+                              <ArticleCard
+                                      title={post.data.title}
+                                      content={post.data.description}
+                                      slug={post.slug}
+                                      date={post.data.formattedDate}
+                              />
+                      ))}
 
-					</div>
-				</div>
-			</section>
-		</section>
-	</div>
-	<Footer />
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <Footer/>
 </Layout>

@@ -1,26 +1,24 @@
 ---
-import { Image } from "@astrojs/image/components";
-
 interface PostHero {
   imageUrl: string;
   altText?: string;
 }
 
 const {imageUrl, altText} = Astro.props;
-
 ---
+
 <div class="h-64 lg:h-144 mb-12">
   <!-- <Image
-  class="w-full h-full object-cover" 
+  class="w-full h-full object-cover"
   src={imageUrl}
-  alt={altText ?? ''}  
+  alt={altText ?? ''}
   width={2600}
   aspectRatio="16:9"
   /> -->
   <img
-  class="w-full h-full object-cover" 
+  class="w-full h-full object-cover"
   src={imageUrl}
-  alt={altText ?? ''}  
+  alt={altText ?? ''}
   />
 </div>
 

@@ -1,16 +1,9 @@
 ---
-import { formatDate, getLatestPublishedPosts, getTextFromHtml } from '../../lib/api';
-import PoemsCard from '../../components/post-components/PoemsCard.astro';
 import Layout from '../../layouts/Layout.astro';
+import PoemsCard from '../../components/post-components/PoemsCard.astro';
+import {getLatestPosts} from "../../utils/wordpressClient";
 
-const response = await getLatestPublishedPosts(false);
-const posts = response?.nodes?.map( (p: any)=> {
-  p.shortContent =  getTextFromHtml(p.excerpt ?? p.content);
-  p.formattedDate = formatDate(p.date);
-
-  return p;
-});
-
+const posts = await getLatestPosts(false);
 ---
 
 
@@ -26,7 +19,7 @@ const posts = response?.nodes?.map( (p: any)=> {
       <div class="flex flex-wrap -m-4">
         {posts.map((post: any) => (
           <PoemsCard
-          title={post.title}
+          title={post.data.description}
           slug={post.slug}
           />
         ))}
