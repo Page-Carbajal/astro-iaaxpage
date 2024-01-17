@@ -8,6 +8,7 @@ import {formatDate, getAllPublishedPostsSlugs, getPostBySlug} from '../../lib/ap
 import "../../styles/post.css";
 import ArticleHeader from "../../components/post-components/ArticleHeader.astro";
 import SocialShareButton from "../../components/post-components/SocialShareButton.astro";
+import {getArticleBySlug} from "../../lib/strapiClient";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 
 
 const {slug} = Astro.params;
-const response = await getPostBySlug(slug ?? '');
+const response = await getArticleBySlug(slug ?? '');
 const {attributes = undefined} = response?.data[0];
 const content = marked(attributes.content);
 const formattedDate = formatDate(attributes?.manual_published_at);

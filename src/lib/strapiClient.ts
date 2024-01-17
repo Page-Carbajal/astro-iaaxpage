@@ -9,7 +9,7 @@ const STRAPI_ACCESS_TOKEN = process.env.STRAPI_ACCESS_TOKEN ?? 0;
 const STRAPI_PAGE_SIZE = parseInt(process.env.STRAPI_PAGE_SIZE ?? "7")
 
 export type GetArticlesProps = {
-  fields: string|string[],
+  fields: string | string[],
   pageSize?: number,
   sort?: string[]
 }
@@ -62,6 +62,41 @@ export async function getArticles(props: GetArticlesProps) {
   });
 
   return await res.json();
+}
+
+
+export async function getLatestArticles() {
+  const articlesUrl = `${STRAPI_API_URL}/articles`;
+  const payload: StrapiRequestProps = {
+    filters: {
+      site: {
+        domain: "iaaxpage.com"
+      }
+    },
+    pagination: {
+      pageSize: 100
+    },
+    sort: [
+      "manual_published_at:desc"
+    ]
+  }
+
+  const query = qs.stringify(payload);
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${STRAPI_ACCESS_TOKEN}`
+  };
+
+  const res = await fetch(`${articlesUrl}?${query}`, {
+    method: 'GET',
+    headers,
+  });
+
+  const json = await res.json();
+  const {data} = json;
+
+  return data;
 }
 
 

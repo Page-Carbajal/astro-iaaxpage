@@ -1,12 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import {getLatestPosts} from "../utils/wordpressClient";
 import SiteInfo from '../components/home-components/SiteInfo.astro';
 import ArticleCard from '../components/home-components/ArticleCard.astro';
 import FeaturedArticle from '../components/home-components/FeaturedArticle.astro';
+import {formatDate} from "../lib/api";
+import {getLatestArticles} from "../lib/strapiClient";
 
-const posts = await getLatestPosts();
+const posts = await getLatestArticles();
+
 ---
 
 
@@ -26,10 +28,10 @@ const posts = await getLatestPosts();
 
                       {posts.map((post: any) => (
                               <ArticleCard
-                                      title={post.data.title}
-                                      content={post.data.description}
-                                      slug={post.slug}
-                                      date={post.data.formattedDate}
+                                      title={post.attributes.title}
+                                      content={post.attributes.overview}
+                                      slug={post.attributes.slug}
+                                      date={formatDate(post.attributes.manual_published_at)}
                               />
                       ))}
 

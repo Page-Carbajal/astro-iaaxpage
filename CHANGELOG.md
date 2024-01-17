@@ -3,6 +3,7 @@
 ### January 16th 
 
 - Refactored getPostBySlug
+- Added function strapiClient/getLatestArticles
 
 
 ### January 15th 
