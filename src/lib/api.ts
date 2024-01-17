@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import * as process from "process";
+import {getArticleBySlug, getArticles} from "./strapiClient.ts";
 
 dotenv.config();
 
@@ -44,47 +45,20 @@ export const formatDate = (date: string) => {
 export async function getAllPublishedPostsSlugs(articles: boolean = true) {
 
   const categoryId = articles ? ARTICLES_CATEGORY_ID : POEMS_CATEGORY_ID;
+  const response = await getArticles({fields: ['manual_published_at', 'slug'], pageSize: 100})
+  const slugs = response.data.map(({attributes}: any) => {
+    return {
+      params: {slug: attributes.slug},
+    };
+  });
 
-  const data = await fetchAPI(`
-  {
-    posts(where: {status: PUBLISH, categoryId: ${categoryId}}, first: 1000) {
-      edges {
-        node {
-          slug
-        }
-      }
-    }
-  }
-  `);
-  return data?.posts;
+  return slugs;
 }
 
 
 export async function getPostBySlug(slug: string) {
-  const data = await fetchAPI(`
-  {
-    post(id: "${slug}", idType: SLUG) {
-      id
-      slug
-      date
-      title
-      content(format: RENDERED)
-      featuredImage {
-        node {
-          date
-          slug
-          altText
-          caption
-          sourceUrl
-          guid
-          fileSize
-          mediaType
-          mimeType
-        }
-      }
-    }
-  }
-  `);
-  return data?.post;
+  const post = await getArticleBySlug(slug);
+
+  return post;
 }
 

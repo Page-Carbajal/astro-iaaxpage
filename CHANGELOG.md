@@ -1,5 +1,17 @@
 # Iaax Page Website - Change Log
 
+### January 16th 
+
+- Refactored getPostBySlug
+
+
+### January 15th 
+
+- Added lib/strapiClient
+- Changed some configs on the Articles and Categories
+- Refactored api/getAllPublishedPostsSlugs to use StrapiClient
+
+
 ### January 5th
 
 - Added src/config.ts lib/types.ts

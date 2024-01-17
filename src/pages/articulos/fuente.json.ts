@@ -1,5 +1,5 @@
 import type {APIRoute} from "astro";
-import getWordpressPosts, {getLatestPosts} from "@utils/wordpressClient.ts";
+import getWordpressPosts, {getLatestPosts} from "@utils/wordpressClient";
 
 export const GET: APIRoute = async ({params, request}) => {
 
