@@ -1,6 +1,11 @@
 # Iaax Page Website - Change Log
 
-### January 18th 
+### January 19th
+
+- Added src/assets/images/iaax-page-logo-large-black-no-background.png
+
+
+### January 17th 
 
 - RC1 for Strapi Integration
 - Added PostImage to the articles
