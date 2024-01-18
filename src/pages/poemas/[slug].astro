@@ -22,7 +22,7 @@ const { slug } = Astro.params;
 const response = await getArticleBySlug(slug ?? '');
 const {attributes} = response.data[0];
 const image = attributes?.image?.data?.attributes?.formats?.large;
-console.log(' >>> IMAGE: ', image);
+// console.log(' >>> IMAGE: ', image);
 const formattedDate = formatDate(attributes?.manual_published_at);
 const content = marked(attributes.content);
 ---

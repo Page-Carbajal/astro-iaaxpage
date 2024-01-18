@@ -2,13 +2,13 @@
 import dotenv from "dotenv";
 import {marked} from "marked";
 import Layout from '../../layouts/Layout.astro';
-import PostHero from '../../components/post-components/PostHero.astro';
 import Footer from '../../components/Footer.astro';
 import {formatDate, getAllPublishedPostsSlugs, getPostBySlug} from '../../lib/api';
 import "../../styles/post.css";
 import ArticleHeader from "../../components/post-components/ArticleHeader.astro";
 import SocialShareButton from "../../components/post-components/SocialShareButton.astro";
 import {getArticleBySlug} from "../../lib/strapiClient";
+import PostImage from "../../components/post-components/PostImage.astro";
 
 dotenv.config();
 
@@ -22,18 +22,26 @@ export async function getStaticPaths() {
 const {slug} = Astro.params;
 const response = await getArticleBySlug(slug ?? '');
 const {attributes = undefined} = response?.data[0];
+const image = attributes?.image?.data?.attributes?.formats?.large;
 const content = marked(attributes.content);
 const formattedDate = formatDate(attributes?.manual_published_at);
 ---
 <Layout title={attributes.title}>
     <article id={`article.${slug}`} class="py-0">
-        <ArticleHeader title={attributes.title} publishDate={formattedDate} homeUrl={homeUrl}/>
-        <!--{attributes?.featuredImage?.node?.guid && (-->
-        <!--  <PostHero-->
-        <!--  imageUrl={attributes?.featuredImage?.node?.guid}-->
-        <!--  altText={attributes?.featuredImage?.node?.altText}-->
-        <!--  />)}-->
+        <ArticleHeader
+          title={attributes.title}
+          homeUrl={homeUrl}
+          backgroundImageUrl={image?.url}
+          publishDate={formattedDate}
+        />
         <div class="prose container px-4 mx-auto pt-7">
+
+            {image?.url && (
+              <PostImage
+                imageUrl={image.url}
+                altText={`${attributes.title} – Image`}
+              />)}
+
             <div class="max-w-2xl mx-auto">
                 <Fragment set:html={content} />
             </div>

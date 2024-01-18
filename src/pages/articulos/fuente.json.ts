@@ -1,9 +1,10 @@
 import type {APIRoute} from "astro";
-import getWordpressPosts, {getLatestPosts} from "@utils/wordpressClient";
+import {getLatestArticles} from "../../lib/strapiClient";
+
 
 export const GET: APIRoute = async ({params, request}) => {
 
-  const posts = await getLatestPosts(true, 200);
+  const posts = await getLatestArticles();
   const headers = {
     'Content-Type': 'application/json'
   };

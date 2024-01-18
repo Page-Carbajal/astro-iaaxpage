@@ -3,12 +3,18 @@ export interface Props {
   title: string;
   publishDate?: string;
   homeUrl?: string;
+  backgroundImageUrl?: string;
 }
 
-const {title, publishDate, homeUrl} = Astro.props;
+const {title, publishDate, homeUrl, backgroundImageUrl = ''} = Astro.props;
 ---
 
 <header class="heroHeader waveAnimation7sOnce px-4 mx-auto text-gray-300 bg-blue-800">
+    <div
+      class="absolute -z-0 bg-no-repeat bg-cover top-0 left-0 w-full h-full opacity-10"
+      style={`background-image: url("${backgroundImageUrl}")`}
+    >
+    </div>
     <a href={homeUrl} class="flex items-center justify-center mb-6 text-xs font-semibold uppercase pt-11 underline">
         <span class="pr-2">
             <svg class="h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

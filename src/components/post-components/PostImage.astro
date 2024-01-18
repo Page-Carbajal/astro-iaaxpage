@@ -1,0 +1,17 @@
+---
+interface PostImage {
+  imageUrl: string;
+  altText?: string;
+}
+
+const {imageUrl, altText} = Astro.props;
+---
+
+<div class="w-full py-8">
+    <img
+            class="w-full h-full object-cover rounded-2xl drop-shadow-sm	"
+            src={imageUrl}
+            alt={altText ?? ''}
+    />
+</div>
+

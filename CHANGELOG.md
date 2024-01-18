@@ -3,6 +3,7 @@
 ### January 18th 
 
 - RC1 for Strapi Integration
+- Added PostImage to the articles
 
 
 ### January 16th 
