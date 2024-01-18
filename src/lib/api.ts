@@ -30,6 +30,14 @@ export async function getAllPublishedPostsSlugs(categorySlug: string = 'articles
       "manual_published_at:desc"
     ]
   };
+
+  if( 'articles' == categorySlug ){
+    slugPayload.filters.category_id = {
+      slug: { $in: ['featured', categorySlug]}
+    }
+  }
+
+
   const response = await getArticles(slugPayload);
 
   const slugs = response.data.map(({attributes}: any) => {

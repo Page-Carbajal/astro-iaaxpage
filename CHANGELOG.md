@@ -4,6 +4,8 @@
 
 - RC1 for Strapi Integration
 - Added PostImage to the articles
+- Fixed missing featured articles
+- Fixed back link on ArticleHeader
 
 
 ### January 16th 

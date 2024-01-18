@@ -116,6 +116,12 @@ export async function getLatestArticles(categorySlug: string = 'articles') {
     ]
   }
 
+  if( 'articles' == categorySlug ){
+    payload.filters.category_id = {
+      slug: { $in: ['featured', categorySlug]}
+    }
+  }
+
   const query = qs.stringify(payload);
 
   const headers = {

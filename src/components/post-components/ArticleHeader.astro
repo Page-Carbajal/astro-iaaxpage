@@ -15,7 +15,7 @@ const {title, publishDate, homeUrl, backgroundImageUrl = ''} = Astro.props;
       style={`background-image: url("${backgroundImageUrl}")`}
     >
     </div>
-    <a href={homeUrl} class="flex items-center justify-center mb-6 text-xs font-semibold uppercase pt-11 underline">
+    <a href={homeUrl} class="flex items-center justify-center mb-6 text-xs font-semibold uppercase pt-11 underline z-20 relative">
         <span class="pr-2">
             <svg class="h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path transform="rotate(180 3.9375 6)"
