@@ -1,37 +1,4 @@
-import dotenv from "dotenv";
-import * as process from "process";
-import {getArticleBySlug, getArticles} from "./strapiClient.ts";
-
-dotenv.config();
-
-const GRAPHQL_URL = process.env.WP_GRAPHQL_URL ?? undefined;
-const POEMS_CATEGORY_ID = process.env.WP_POEMS_CATEGORY_ID ?? 0;
-const ARTICLES_CATEGORY_ID = process.env.WP_ARTICLES_CATEGORY_ID ?? 0;
-
-
-async function fetchAPI(query: string, {variables}: any = {}) {
-
-  if (!GRAPHQL_URL) {
-    console.log('********** GRAPHQL_URL IS UNDEFINED ************');
-    return {data: null};
-  }
-
-
-  const headers = {'Content-Type': 'application/json'};
-  const res = await fetch(GRAPHQL_URL, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({query, variables}),
-  });
-
-  const json = await res.json();
-  if (json.errors) {
-    console.log(json.errors);
-    throw new Error('Failed to fetch API');
-  }
-
-  return json.data;
-}
+import {getArticleBySlug, getArticles, GetArticlesProps, getLatestArticles} from "./strapiClient.ts";
 
 
 export const formatDate = (date: string) => {
@@ -42,10 +9,29 @@ export const formatDate = (date: string) => {
 }
 
 
-export async function getAllPublishedPostsSlugs(articles: boolean = true) {
+export async function getAllPublishedPostsSlugs(categorySlug: string = 'articles') {
+  const slugPayload: GetArticlesProps = {
+    fields: [
+      'slug'
+    ],
+    filters: {
+      site: {
+        domain: "iaaxpage.com"
+      },
+      category_id:{
+        slug: categorySlug
+      }
+    },
+    pagination: {
+      pageSize: 100
+    },
+    populate: "image",
+    sort: [
+      "manual_published_at:desc"
+    ]
+  };
+  const response = await getArticles(slugPayload);
 
-  const categoryId = articles ? ARTICLES_CATEGORY_ID : POEMS_CATEGORY_ID;
-  const response = await getArticles({fields: ['manual_published_at', 'slug'], pageSize: 100})
   const slugs = response.data.map(({attributes}: any) => {
     return {
       params: {slug: attributes.slug},

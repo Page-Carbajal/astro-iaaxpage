@@ -1,9 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PoemsCard from '../../components/post-components/PoemsCard.astro';
-import {getLatestPosts} from "../../utils/wordpressClient";
+import {getLatestArticles} from "../../lib/strapiClient";
 
-const posts = await getLatestPosts(false);
+
+const posts = await getLatestArticles('poems')
 ---
 
 
@@ -19,8 +20,8 @@ const posts = await getLatestPosts(false);
       <div class="flex flex-wrap -m-4">
         {posts.map((post: any) => (
           <PoemsCard
-          title={post.data.description}
-          slug={post.slug}
+          title={post.attributes.title}
+          slug={post.attributes.slug}
           />
         ))}
       </div>

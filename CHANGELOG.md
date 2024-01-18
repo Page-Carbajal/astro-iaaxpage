@@ -1,5 +1,10 @@
 # Iaax Page Website - Change Log
 
+### January 18th 
+
+- RC1 for Strapi Integration
+
+
 ### January 16th 
 
 - Refactored getPostBySlug

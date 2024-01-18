@@ -10,25 +10,30 @@ const STRAPI_PAGE_SIZE = parseInt(process.env.STRAPI_PAGE_SIZE ?? "7")
 
 export type GetArticlesProps = {
   fields: string | string[],
+  filters?: any,
   pageSize?: number,
+  populate?: string | string[]
   sort?: string[]
 }
 
 type StrapiRequestProps = {
   filters?: any,
-  sort?: string[],
+  fields?: string | string[],
   pagination?: {
     pageSize?: number | string,
     page?: number,
   },
-  fields?: string | string[],
+  populate?: string | string[],
+  sort?: string[],
 }
 
 
 export async function getArticles(props: GetArticlesProps) {
   const {
     fields = '*',
+    filters,
     pageSize = STRAPI_PAGE_SIZE,
+    populate,
     sort = ["manual_published_at:desc"]
   } = props;
   const parsedFields = '*' == fields ? undefined : fields;
@@ -42,11 +47,16 @@ export async function getArticles(props: GetArticlesProps) {
     sort: sort,
     pagination: {
       pageSize: pageSize
-    }
+    },
+    populate: populate
   }
 
   if (parsedFields) {
     payload.fields = parsedFields;
+  }
+
+  if (filters) {
+    payload.filters = filters;
   }
 
   const query = qs.stringify(payload);
@@ -65,17 +75,42 @@ export async function getArticles(props: GetArticlesProps) {
 }
 
 
-export async function getLatestArticles() {
+export async function getLatestFeaturedArticle() {
+  const featuredArticleProps: GetArticlesProps = {
+    fields: "*",
+    filters: {
+      category_id: {
+        slug: 'featured'
+      }
+    },
+    pageSize: 1,
+    populate: "image",
+    sort: [
+      "manual_published_at:desc"
+    ]
+  }
+
+  const response = await getArticles(featuredArticleProps);
+
+  return response?.data[0]?.attributes;
+}
+
+
+export async function getLatestArticles(categorySlug: string = 'articles') {
   const articlesUrl = `${STRAPI_API_URL}/articles`;
   const payload: StrapiRequestProps = {
     filters: {
       site: {
         domain: "iaaxpage.com"
+      },
+      category_id: {
+        slug: categorySlug
       }
     },
     pagination: {
       pageSize: 100
     },
+    populate: "image",
     sort: [
       "manual_published_at:desc"
     ]
@@ -106,6 +141,7 @@ export async function getArticleBySlug(slug: string) {
     filters: {
       slug: slug.trim()
     },
+    populate: "image"
   }
 
   const query = qs.stringify(payload);
