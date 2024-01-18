@@ -1,9 +1,11 @@
 ---
 import dotenv from "dotenv";
+import {marked} from "marked";
 import Layout from '../../layouts/Layout.astro';
 import PostHero from '../../components/post-components/PostHero.astro';
 import Footer from '../../components/Footer.astro';
-import { formatDate, getAllPublishedPostsSlugs, getPostBySlug } from '../../lib/api';
+import { formatDate, getAllPublishedPostsSlugs } from '../../lib/api';
+import {getArticleBySlug} from "../../lib/strapiClient";
 import "../../styles/post.css";
 
 dotenv.config();
@@ -12,21 +14,19 @@ const homeUrl = process.env.HOME_URL;
 
 
 export async function getStaticPaths() {
-  const postSlugs = await getAllPublishedPostsSlugs(false);
-
-  return postSlugs.edges.map(({ node }: any) => {
-    return {
-      params: { slug: node.slug },
-    };
-  });  
+  return await getAllPublishedPostsSlugs('poems');
 }
 
 
 const { slug } = Astro.params;
-const post = await getPostBySlug(slug ?? '');
-const formattedDate = formatDate(post.date);
+const response = await getArticleBySlug(slug ?? '');
+const {attributes} = response.data[0];
+const image = attributes?.image?.data?.attributes?.formats?.large;
+// console.log(' >>> IMAGE: ', image);
+const formattedDate = formatDate(attributes?.manual_published_at);
+const content = marked(attributes.content);
 ---
-<Layout title={post.title}>
+<Layout title={attributes.title}>
   <article id={`article.${slug}`} class="py-24">
     <div class="container px-4 mx-auto">
       <div class="max-w-2xl mb-12 mx-auto text-center">
@@ -43,9 +43,9 @@ const formattedDate = formatDate(post.date);
               <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
             </svg>
           </span>
-          <span>{post.title}</span>
+          <span>{attributes.title}</span>
         </div>
-        <h1 class="mb-6 text-5xl text-blue-800 font-bold font-heading">{post.title}</h1>
+        <h1 class="mb-6 text-5xl text-blue-800 font-bold font-heading">{attributes.title}</h1>
         <p class="text-blue-500 text-xs">{formattedDate}</p>
         <!-- <div class="flex items-center justify-center">
           <div class="mr-6">
@@ -58,16 +58,15 @@ const formattedDate = formatDate(post.date);
         </div> -->
       </div>
     </div>
-    {post?.featuredImage?.node?.guid && (
+    {image?.url && (
       <PostHero
-      imageUrl={post?.featuredImage?.node?.guid}
-      altText={post?.featuredImage?.node?.altText}
+      imageUrl={image.url}
+      altText={attributes?.title}
       />)}
     <div class="container px-4 mx-auto">
       <article class="max-w-2xl mx-auto">
-        <Fragment set:html= {post.content} />
+        <Fragment set:html= {content} />
       </article>
-  
     </div>
   </article>
   <Footer />

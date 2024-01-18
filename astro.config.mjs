@@ -1,8 +1,9 @@
-import {defineConfig} from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import dotenv from "dotenv";
+import tailwind from '@astrojs/tailwind';
+import {defineConfig} from 'astro/config';
 
 dotenv.config();
+
 const homeUrl = process.env.HOME_URL;
 
 // https://astro.build/config

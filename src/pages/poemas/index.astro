@@ -1,16 +1,10 @@
 ---
-import { formatDate, getLatestPublishedPosts, getTextFromHtml } from '../../lib/api';
-import PoemsCard from '../../components/post-components/PoemsCard.astro';
 import Layout from '../../layouts/Layout.astro';
+import PoemsCard from '../../components/post-components/PoemsCard.astro';
+import {getLatestArticles} from "../../lib/strapiClient";
 
-const response = await getLatestPublishedPosts(false);
-const posts = response?.nodes?.map( (p: any)=> {
-  p.shortContent =  getTextFromHtml(p.excerpt ?? p.content);
-  p.formattedDate = formatDate(p.date);
 
-  return p;
-});
-
+const posts = await getLatestArticles('poems')
 ---
 
 
@@ -26,8 +20,8 @@ const posts = response?.nodes?.map( (p: any)=> {
       <div class="flex flex-wrap -m-4">
         {posts.map((post: any) => (
           <PoemsCard
-          title={post.title}
-          slug={post.slug}
+          title={post.attributes.title}
+          slug={post.attributes.slug}
           />
         ))}
       </div>

@@ -1,5 +1,33 @@
 # Iaax Page Website - Change Log
 
+### January 18th 
+
+- RC1 for Strapi Integration
+- Added PostImage to the articles
+
+
+### January 16th 
+
+- Refactored getPostBySlug
+- Added function strapiClient/getLatestArticles
+
+
+### January 15th 
+
+- Added lib/strapiClient
+- Changed some configs on the Articles and Categories
+- Refactored api/getAllPublishedPostsSlugs to use StrapiClient
+
+
+### January 5th
+
+- Added src/config.ts lib/types.ts
+- Imported @page-carbajal/wp-graphql
+- Created articles/fuente.json.ts
+
+
+## 2023
+
 ### December 30th 
 
 - Created component SocialShareButton
