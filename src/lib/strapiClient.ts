@@ -135,7 +135,7 @@ export async function getLatestArticles(categorySlug: string = 'articles') {
   });
   const json = await res.json();
   const {data} = json;
-  console.log('>>> JSON: ', json);
+  // console.log('>>> JSON: ', json);
 
   return data;
 }
