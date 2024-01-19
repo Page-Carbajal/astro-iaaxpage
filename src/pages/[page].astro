@@ -8,7 +8,14 @@ import {formatDate} from "../lib/api";
 import {getLatestArticles} from "../lib/strapiClient";
 
 
-const posts = await getLatestArticles('articles', 7);
+export async function getStaticPaths({ paginate }) {
+  const posts = await getLatestArticles('articles', 100);
+
+  return paginate(posts, { pageSize: 7});
+}
+
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
 ---
 
 
@@ -17,8 +24,8 @@ const posts = await getLatestArticles('articles', 7);
     <div class="wrapper">
         <section class="py-24">
             <SiteInfo
-                    title="Iaax Page"
-                    description="Blog de Desarrollo Personal"
+                    title="Blog de Desarrollo Personal"
+                    description=`Artículos página ${page.currentPage} de ${page.totalPages}}`
                     quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
             />
             <FeaturedArticle/>
@@ -26,7 +33,7 @@ const posts = await getLatestArticles('articles', 7);
                 <div class="container px-4 mx-auto">
                     <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
 
-                      {posts.map((post: any) => (
+                      {page.data.map((post: any) => (
                               <ArticleCard
                                       title={post.attributes.title}
                                       content={post.attributes.overview}
@@ -35,12 +42,14 @@ const posts = await getLatestArticles('articles', 7);
                               />
                       ))}
 
+
                     </div>
                 </div>
             </section>
         </section>
-        <div class="py-8 flex justify-center">
-            <a href="/2" class="text-blue-800 hover:underline text-xl">&lt; Atr&aacute;s</a>
+        <div class="py-8 flex justify-evenly w-1/3 m-auto">
+            {page.url.next ? <a href={page.url.next} class="text-blue-800 hover:underline text-xl">&lt; Atr&aacute;s</a> : null}
+            {page.url.prev ? <a href={page.url.prev} class="text-blue-800 hover:underline text-xl">Adelante &gt;</a> : null}
         </div>
     </div>
     <Footer/>
