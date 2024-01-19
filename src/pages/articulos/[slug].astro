@@ -22,32 +22,37 @@ export async function getStaticPaths() {
 const {slug} = Astro.params;
 const response = await getArticleBySlug(slug ?? '');
 const {attributes = undefined} = response?.data[0];
-const image = attributes?.image?.data?.attributes?.formats?.large;
+const image = attributes?.image?.data?.attributes;
 const content = marked(attributes.content);
 const formattedDate = formatDate(attributes?.manual_published_at);
 ---
-<Layout title={attributes.title}>
+<Layout
+        title={attributes.title}
+        description={attributes?.overview}
+        imageUrl={image?.url}
+        imageSize={{height: image?.height, width: image?.width}}
+>
     <article id={`article.${slug}`} class="py-0">
         <ArticleHeader
-          title={attributes.title}
-          homeUrl={homeUrl}
-          backgroundImageUrl={image?.url}
-          publishDate={formattedDate}
+                title={attributes.title}
+                homeUrl={homeUrl}
+                backgroundImageUrl={image?.url}
+                publishDate={formattedDate}
         />
         <div class="prose container px-4 mx-auto pt-7">
 
-            {image?.url && (
-              <PostImage
-                imageUrl={image.url}
-                altText={`${attributes.title} – Image`}
-              />)}
+          {image?.url && (
+                  <PostImage
+                          imageUrl={image.url}
+                          altText={`${attributes.title} – Image`}
+                  />)}
 
             <div class="max-w-2xl mx-auto">
-                <Fragment set:html={content} />
+                <Fragment set:html={content}/>
             </div>
         </div>
         <div class="container py-4 text-center">
-            <SocialShareButton url={Astro.url} title={attributes.title} shareOnX={true} />
+            <SocialShareButton url={Astro.url} title={attributes.title} shareOnX={true}/>
         </div>
     </article>
     <Footer/>

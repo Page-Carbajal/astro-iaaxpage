@@ -8,11 +8,10 @@ import {formatDate} from "../lib/api";
 import {getLatestArticles} from "../lib/strapiClient";
 
 const posts = await getLatestArticles();
-console.log(' >>> POSTS: ', posts);
 ---
 
 
-<Layout title="Iaax Page">
+<Layout>
 
     <div class="wrapper">
         <section class="py-24">
