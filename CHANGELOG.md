@@ -3,6 +3,7 @@
 ### January 19th
 
 - Conditional Open Graph Tags for articles
+- Quick pagination for articles
 
 
 ### January 18th

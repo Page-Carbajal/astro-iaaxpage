@@ -21,6 +21,7 @@ export default defineConfig({
   redirects: {
     '/articulos': homeUrl,
     '/articulos/3226': '/articulos/lecciones-por-aprender',
+    '/1': '/'
   },
   integrations: [tailwind({
     config: {}
