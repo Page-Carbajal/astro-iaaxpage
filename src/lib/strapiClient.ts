@@ -8,6 +8,7 @@ const STRAPI_API_URL = process.env.STRAPI_API_URL ?? undefined;
 const STRAPI_ACCESS_TOKEN = process.env.STRAPI_ACCESS_TOKEN ?? 0;
 const STRAPI_PAGE_SIZE = parseInt(process.env.STRAPI_PAGE_SIZE ?? "7")
 
+
 export type GetArticlesProps = {
   fields: string | string[],
   filters?: any,
@@ -15,6 +16,19 @@ export type GetArticlesProps = {
   populate?: string | string[]
   sort?: string[]
 }
+
+
+export type SiteInfoProps = {
+  title: string,
+  domain: string,
+  description?: string,
+  defaultImageUrl?: string,
+  defaultImageSize?: {
+    height?: number,
+    width?: number,
+  }
+}
+
 
 type StrapiRequestProps = {
   filters?: any,
@@ -163,5 +177,45 @@ export async function getArticleBySlug(slug: string) {
   });
 
   return await res.json();
+}
+
+export async function getSiteByDomain(domain: string) {
+  const articlesUrl = `${STRAPI_API_URL}/sites`;
+  const payload: StrapiRequestProps = {
+    filters: {
+      domain: domain.trim()
+    },
+    populate: ["image", "icon"]
+  }
+
+  const query = qs.stringify(payload);
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${STRAPI_ACCESS_TOKEN}`
+  };
+
+  const res = await fetch(`${articlesUrl}?${query}`, {
+    method: 'GET',
+    headers,
+  });
+
+  const jsonResponse = await res.json();
+  const siteInfo = jsonResponse?.data[0];
+  const defaultImage = siteInfo?.attributes?.image?.data?.attributes;
+  const site: SiteInfoProps = {
+    title: siteInfo?.attributes?.title,
+    domain: siteInfo?.attributes?.domain,
+    description: siteInfo?.attributes?.description,
+    defaultImageUrl: defaultImage?.url,
+    defaultImageSize: {
+      height: defaultImage?.height,
+      width: defaultImage?.width,
+    }
+  }
+
+  console.log(' >>> SITE: ', site);
+
+  return site;
 }
 

@@ -1,11 +1,25 @@
 ---
 import "../styles/globals.scss";
+import {getSiteByDomain} from "../lib/strapiClient";
+
 
 export interface Props {
 	title: string;
+	description?: string;
+	imageUrl?: string;
+	imageSize?: any;
 }
 
-const { title } = Astro.props;
+const site = await getSiteByDomain('iaaxpage.com')
+const {
+	title = site.title,
+	description = site.description,
+	imageUrl = site.defaultImageUrl,
+	imageSize = site.defaultImageSize,
+} = Astro.props;
+
+console.log('>>> Astro.props', Astro.props);
+
 ---
 
 <!doctype html>
@@ -14,9 +28,22 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+
 		<title>{title}</title>
-		
+		{description && (<meta name="description" content={description} />)}
+
+
+		<meta property="og:title" content={title} />
+		<meta property="og:type" content="image/png" />
+		<meta property="og:url" content={Astro.url} />
+
+		{description && (<meta property="og:description" content={description} />)}
+		{imageUrl && (<meta property="og:image" content={imageUrl} />)}
+		{imageSize?.width && (<meta name="og:image:width" content={imageSize.width} />)}
+		{imageSize?.height && (<meta name="og:image:height" content={imageSize.height} />)}
+
+
+		<meta name="generator" content={Astro.generator} />
 		<script
 			type="text/partytown"
 			src="https://www.googletagmanager.com/gtag/js?id=G-DLF9W3JG0B">

@@ -1,5 +1,10 @@
 # Iaax Page Website - Change Log
 
+### January 19th
+
+- Conditional Open Graph Tags for articles
+
+
 ### January 18th
 
 - Added src/assets/images/iaax-page-logo-large-black-no-background.png
