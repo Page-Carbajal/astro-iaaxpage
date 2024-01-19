@@ -18,7 +18,7 @@ export async function getAllPublishedPostsSlugs(categorySlug: string = 'articles
       site: {
         domain: "iaaxpage.com"
       },
-      category_id:{
+      article_category:{
         slug: categorySlug
       }
     },
@@ -32,7 +32,7 @@ export async function getAllPublishedPostsSlugs(categorySlug: string = 'articles
   };
 
   if( 'articles' == categorySlug ){
-    slugPayload.filters.category_id = {
+    slugPayload.filters.article_category = {
       slug: { $in: ['featured', categorySlug]}
     }
   }

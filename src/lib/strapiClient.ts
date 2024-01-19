@@ -79,7 +79,7 @@ export async function getLatestFeaturedArticle() {
   const featuredArticleProps: GetArticlesProps = {
     fields: "*",
     filters: {
-      category_id: {
+      article_category: {
         slug: 'featured'
       }
     },
@@ -103,7 +103,7 @@ export async function getLatestArticles(categorySlug: string = 'articles') {
       site: {
         domain: "iaaxpage.com"
       },
-      category_id: {
+      article_category: {
         slug: categorySlug
       }
     },
@@ -117,7 +117,7 @@ export async function getLatestArticles(categorySlug: string = 'articles') {
   }
 
   if( 'articles' == categorySlug ){
-    payload.filters.category_id = {
+    payload.filters.article_category = {
       slug: { $in: ['featured', categorySlug]}
     }
   }
@@ -133,9 +133,9 @@ export async function getLatestArticles(categorySlug: string = 'articles') {
     method: 'GET',
     headers,
   });
-
   const json = await res.json();
   const {data} = json;
+  console.log('>>> JSON: ', json);
 
   return data;
 }
