@@ -1,5 +1,10 @@
 # Iaax Page Website - Change Log
 
+### January 20th 
+
+- Added robots.txt.ts
+
+
 ### January 19th
 
 - Conditional Open Graph Tags for articles
