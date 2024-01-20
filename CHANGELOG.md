@@ -2,7 +2,9 @@
 
 ### January 20th 
 
-- Added robots.txt.ts
+- Fixed issue with sharp, Astro Image uses it to transform images was not working
+- Re-added pages/robots.txt.ts
+- Added redirections for deprecated articles
 
 
 ### January 19th
