@@ -19,9 +19,14 @@ import partytown from "@astrojs/partytown";
 export default defineConfig({
   site: homeUrl,
   redirects: {
+    '/1': homeUrl,
     '/articulos': homeUrl,
+    '/articulos/rumbo-al-2020': homeUrl,
+    '/articulos/soluciones-para-mexico': homeUrl,
+    '/articulos/mejorando-mi-apariencia-personal': homeUrl,
     '/articulos/3226': '/articulos/lecciones-por-aprender',
-    '/1': '/'
+    '/articulos/el-ayuno-intermitente-no-te-da-superpoderes': homeUrl,
+    '/articulos/ninja-hazte-un-favor-y-tomate-a-ti-mismo-en-serio': homeUrl,
   },
   integrations: [tailwind({
     config: {}
@@ -35,7 +40,8 @@ export default defineConfig({
     // lastmod: Intl.DateTimeFormat('en', {dateStyle: "short"}).format(new Date()),
     changefreq: 'weekly',
     lastmod: new Date(),
-    entryLimit: 100
+    entryLimit: 500,
+
   }), partytown({
     config: {
       forward: ["dataLayer.push"]

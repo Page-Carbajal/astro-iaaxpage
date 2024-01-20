@@ -1,5 +1,12 @@
 # Iaax Page Website - Change Log
 
+### January 20th 
+
+- Fixed issue with sharp, Astro Image uses it to transform images was not working
+- Re-added pages/robots.txt.ts
+- Added redirections for deprecated articles
+
+
 ### January 19th
 
 - Conditional Open Graph Tags for articles
