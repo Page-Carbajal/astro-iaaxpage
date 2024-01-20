@@ -214,7 +214,7 @@ export async function getSiteByDomain(domain: string) {
     }
   }
 
-  // console.log(' >>> SITE: ', site);
+  console.log(' >>> SITE: ', site);
 
   return site;
 }
