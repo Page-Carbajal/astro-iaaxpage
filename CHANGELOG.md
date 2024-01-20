@@ -4,6 +4,7 @@
 
 - Conditional Open Graph Tags for articles
 - Quick pagination for articles
+- Small changes on article archives
 
 
 ### January 18th
