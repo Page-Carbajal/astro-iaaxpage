@@ -11,7 +11,7 @@ import {getLatestArticles} from "../lib/strapiClient";
 export async function getStaticPaths({ paginate }) {
   const posts = await getLatestArticles('articles', 100);
 
-  return paginate(posts, { pageSize: 7});
+  return paginate(posts, { pageSize: 16});
 }
 
 // All paginated data is passed on the "page" prop
