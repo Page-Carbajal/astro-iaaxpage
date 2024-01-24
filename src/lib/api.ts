@@ -1,4 +1,4 @@
-import {getArticleBySlug, getArticles, GetArticlesProps, getLatestArticles} from "./strapiClient.ts";
+import {getArticleBySlug, getArticles, GetArticlesProps} from "./strapiClient.ts";
 
 
 export const formatDate = (date: string) => {
