@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
+import {SITE} from "@config";
 import type {APIRoute} from "astro";
 
-dotenv.config();
 
-const {SITE_URL: siteUrl} = process.env;
-
+const {url: siteUrl} = SITE;
 const robots =
-  siteUrl?.includes("dev") || siteUrl?.includes("netlify")
+  siteUrl.includes("dev")
+  || siteUrl.includes("localhost")
+  || siteUrl.includes("netlify")
     ? "User-agent: *\n" + "Disallow: /" + "".trim()
     : `
 User-agent: *

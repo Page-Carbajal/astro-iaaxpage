@@ -1,5 +1,10 @@
 # Iaax Page Website - Change Log
 
+### January 24th 
+
+- Fixed robots.txt.ts issues. 
+
+
 ### January 20th 
 
 - Fixed issue with sharp, Astro Image uses it to transform images was not working
