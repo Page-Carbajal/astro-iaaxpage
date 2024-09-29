@@ -12,7 +12,7 @@ const STRAPI_PAGE_SIZE = parseInt(process.env.STRAPI_PAGE_SIZE ?? "7")
 export type GetArticlesProps = {
   fields: string | string[],
   filters?: any,
-  pageSize?: number,
+  pagination?: any,
   populate?: string | string[]
   sort?: string[]
 }
@@ -46,7 +46,7 @@ export async function getArticles(props: GetArticlesProps) {
   const {
     fields = '*',
     filters,
-    pageSize = STRAPI_PAGE_SIZE,
+    pagination = {pageSize: STRAPI_PAGE_SIZE},
     populate,
     sort = ["manual_published_at:desc"]
   } = props;
@@ -60,7 +60,7 @@ export async function getArticles(props: GetArticlesProps) {
     },
     sort: sort,
     pagination: {
-      pageSize: pageSize
+      pageSize: STRAPI_PAGE_SIZE
     },
     populate: populate
   }
@@ -97,7 +97,7 @@ export async function getLatestFeaturedArticle() {
         slug: 'featured'
       }
     },
-    pageSize: 1,
+    pagination: {pageSize: 1},
     populate: "image",
     sort: [
       "manual_published_at:desc"
@@ -130,13 +130,15 @@ export async function getLatestArticles(categorySlug: string = 'articles', pageS
     ]
   }
 
-  if( 'articles' == categorySlug ){
+  if ('articles' == categorySlug) {
     payload.filters.article_category = {
-      slug: { $in: ['featured', categorySlug]}
+      slug: {$in: ['featured', categorySlug]}
     }
   }
 
   const query = qs.stringify(payload);
+
+  // console.log('>>> QUERY: ', query);
 
   const headers = {
     'Content-Type': 'application/json',
@@ -149,6 +151,7 @@ export async function getLatestArticles(categorySlug: string = 'articles', pageS
   });
   const json = await res.json();
   const {data} = json;
+
   // console.log('>>> JSON: ', json);
 
   return data;

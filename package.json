@@ -21,6 +21,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.14.1",
+    "@types/qs": "^6.9.11",
     "dotenv": "^16.3.1",
     "sass": "^1.69.6",
     "tailwindcss": "^3.2.7",

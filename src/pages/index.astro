@@ -9,6 +9,7 @@ import {getLatestArticles} from "../lib/strapiClient";
 
 
 const posts = await getLatestArticles('articles', 16);
+// console.log(' >>>> Posts: ', posts);
 ---
 
 
@@ -21,12 +22,12 @@ const posts = await getLatestArticles('articles', 16);
                     description="Iaax Page"
                     quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
             />
-            <FeaturedArticle/>
+            <FeaturedArticle />
             <section class="py-24">
                 <div class="container px-4 mx-auto">
                     <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
 
-                      {posts.map((post: any) => (
+                      {posts && posts.length > 0 && posts.map((post: any) => (
                               <ArticleCard
                                       title={post.attributes.title}
                                       content={post.attributes.overview}
