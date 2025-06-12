@@ -10,8 +10,9 @@ import {getLatestArticles} from "../lib/strapiClient";
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getLatestArticles('articles', 100);
+  const validPosts = posts?.filter((post: any) => post?.attributes) || [];
 
-  return paginate(posts, { pageSize: 16});
+  return paginate(validPosts, { pageSize: 16});
 }
 
 // All paginated data is passed on the "page" prop
@@ -36,7 +37,7 @@ const { page } = Astro.props;
                 <div class="container px-4 mx-auto">
                     <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
 
-                      {page.data.map((post: any) => (
+                      {page.data?.filter((post: any) => post?.attributes).map((post: any) => (
                               <ArticleCard
                                       title={post.attributes.title}
                                       content={post.attributes.overview}

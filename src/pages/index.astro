@@ -14,7 +14,6 @@ const posts = await getLatestArticles('articles', 16);
 
 
 <Layout>
-
     <div class="wrapper">
         <section class="py-24">
             <SiteInfo
@@ -27,12 +26,12 @@ const posts = await getLatestArticles('articles', 16);
                 <div class="container px-4 mx-auto">
                     <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
 
-                      {posts && posts.length > 0 && posts.map((post: any) => (
+                      {posts && posts.length > 0 && posts.filter((post: any) => post?.slug).map((post: any) => (
                               <ArticleCard
-                                      title={post.attributes.title}
-                                      content={post.attributes.overview}
-                                      slug={post.attributes.slug}
-                                      date={formatDate(post.attributes.manual_published_at)}
+                                      title={post.title}
+                                      content={post.overview}
+                                      slug={post.slug}
+                                      date={formatDate(post.manual_published_at)}
                               />
                       ))}
 

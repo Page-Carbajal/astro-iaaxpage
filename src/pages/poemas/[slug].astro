@@ -1,71 +1,77 @@
 ---
 import dotenv from "dotenv";
-import {marked} from "marked";
-import Layout from '../../layouts/Layout.astro';
-import PostHero from '../../components/post-components/PostHero.astro';
-import Footer from '../../components/Footer.astro';
-import { formatDate, getAllPublishedPostsSlugs } from '../../lib/api';
-import {getArticleBySlug} from "../../lib/strapiClient";
+import { marked } from "marked";
+import Layout from "../../layouts/Layout.astro";
+import PostHero from "../../components/post-components/PostHero.astro";
+import Footer from "../../components/Footer.astro";
+import { formatDate, getAllPublishedPostsSlugs } from "../../lib/api";
+import { getArticleBySlug } from "../../lib/strapiClient";
 import "../../styles/post.css";
 
 dotenv.config();
 
 const homeUrl = process.env.HOME_URL;
 
-
 export async function getStaticPaths() {
-  return await getAllPublishedPostsSlugs('poems');
+  return await getAllPublishedPostsSlugs("poems");
 }
 
-
 const { slug } = Astro.params;
-const response = await getArticleBySlug(slug ?? '');
-const {attributes} = response.data[0];
-const image = attributes?.image?.data?.attributes?.formats?.large;
-// console.log(' >>> IMAGE: ', image);
-const formattedDate = formatDate(attributes?.manual_published_at);
-const content = marked(attributes.content);
+const poem = await getArticleBySlug(slug ?? "");
+const image = poem?.image?.data?.attributes?.formats?.large;
+const content = marked(poem?.content ?? "");
+const formattedDate = formatDate(poem?.manual_published_at);
 ---
-<Layout title={attributes.title}>
-  <article id={`article.${slug}`} class="py-24">
+
+<Layout title={poem?.title}>
+  <article id={`poem.${slug}`} class="py-24">
     <div class="container px-4 mx-auto">
       <div class="max-w-2xl mb-12 mx-auto text-center">
-        <div class="flex items-center justify-center mb-6 text-xs text-blue-500 font-semibold uppercase">
+        <div
+          class="flex items-center justify-center mb-6 text-xs text-blue-500 font-semibold uppercase"
+        >
           <a href={homeUrl}>Iaax Page</a>
           <span class="inline-block mx-2">
-            <svg class="text-blue-500 h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
+            <svg
+              class="text-blue-500 h-3 w-3"
+              viewBox="0 0 8 12"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"
+              ></path>
             </svg>
           </span>
           <a href="/poemas">Poemas</a>
           <span class="inline-block mx-2">
-            <svg class="text-blue-500 h-3 w-3" viewBox="0 0 8 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"></path>
+            <svg
+              class="text-blue-500 h-3 w-3"
+              viewBox="0 0 8 12"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.875 0L0 1.875L4.125 6L0 10.125L1.875 12L7.875 6L1.875 0Z"
+              ></path>
             </svg>
           </span>
-          <span>{attributes.title}</span>
+          <span>{poem?.title}</span>
         </div>
-        <h1 class="mb-6 text-5xl text-blue-800 font-bold font-heading">{attributes.title}</h1>
+        <h1 class="mb-6 text-5xl text-blue-800 font-bold font-heading">
+          {poem?.title}
+        </h1>
         <p class="text-blue-500 text-xs">{formattedDate}</p>
-        <!-- <div class="flex items-center justify-center">
-          <div class="mr-6">
-            <img class="w-14 h-14 object-cover" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt="">
-          </div>
-          <div class="text-left">
-            <h3 class="mb-2 text-lg text-gray-500 font-semibold font-heading">Sara Sampton</h3>
-            <p class="text-blue-500 text-xs">{formattedDate}</p>
-          </div>
-        </div> -->
       </div>
     </div>
-    {image?.url && (
-      <PostHero
-      imageUrl={image.url}
-      altText={attributes?.title}
-      />)}
+    {
+      image?.url && (
+        <PostHero imageUrl={image.url} altText={poem?.title} />
+      )
+    }
     <div class="container px-4 mx-auto">
       <article class="max-w-2xl mx-auto">
-        <Fragment set:html= {content} />
+        <Fragment set:html={content} />
       </article>
     </div>
   </article>

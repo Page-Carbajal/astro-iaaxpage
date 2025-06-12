@@ -1,13 +1,17 @@
 ---
 import dotenv from "dotenv";
-import {marked} from "marked";
-import Layout from '../../layouts/Layout.astro';
-import Footer from '../../components/Footer.astro';
-import {formatDate, getAllPublishedPostsSlugs, getPostBySlug} from '../../lib/api';
+import { marked } from "marked";
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import {
+  formatDate,
+  getAllPublishedPostsSlugs,
+  getPostBySlug,
+} from "../../lib/api";
 import "../../styles/post.css";
 import ArticleHeader from "../../components/post-components/ArticleHeader.astro";
 import SocialShareButton from "../../components/post-components/SocialShareButton.astro";
-import {getArticleBySlug} from "../../lib/strapiClient";
+import { getArticleBySlug } from "../../lib/strapiClient";
 import PostImage from "../../components/post-components/PostImage.astro";
 
 dotenv.config();
@@ -18,42 +22,47 @@ export async function getStaticPaths() {
   return await getAllPublishedPostsSlugs();
 }
 
-
-const {slug} = Astro.params;
-const response = await getArticleBySlug(slug ?? '');
-const {attributes = undefined} = response?.data[0];
-const image = attributes?.image?.data?.attributes;
-const content = marked(attributes.content);
-const formattedDate = formatDate(attributes?.manual_published_at);
+const { slug } = Astro.params;
+const article = await getArticleBySlug(slug ?? '');
+const image = article?.image.formats?.large;
+const content = marked(article.content);
+const formattedDate = formatDate(article?.manual_published_at);
 ---
+
 <Layout
-        title={attributes.title}
-        description={attributes?.overview}
-        imageUrl={image?.url}
-        imageSize={{height: image?.height, width: image?.width}}
+  title={article.title}
+  description={article?.overview}
+  imageUrl={image?.url}
+  imageSize={{ height: image?.height, width: image?.width }}
 >
-    <article id={`article.${slug}`} class="py-0">
-        <ArticleHeader
-                title={attributes.title}
-                homeUrl={homeUrl}
-                backgroundImageUrl={image?.url}
-                publishDate={formattedDate}
-        />
-        <div class="prose container px-4 mx-auto pt-7">
+  <article id={`article.${slug}`} class="py-0">
+    <ArticleHeader
+      title={article.title}
+      homeUrl={homeUrl}
+      backgroundImageUrl={image?.url}
+      publishDate={formattedDate}
+    />
+    <div class="prose container px-4 mx-auto pt-7">
+      {
+        image?.url && (
+          <PostImage
+            imageUrl={image.url}
+            altText={`${article.title} – Image`}
+          />
+        )
+      }
 
-          {image?.url && (
-                  <PostImage
-                          imageUrl={image.url}
-                          altText={`${attributes.title} – Image`}
-                  />)}
-
-            <div class="max-w-2xl mx-auto">
-                <Fragment set:html={content}/>
-            </div>
-        </div>
-        <div class="container py-4 text-center">
-            <SocialShareButton url={Astro.url} title={attributes.title} shareOnX={true}/>
-        </div>
-    </article>
-    <Footer/>
+      <div class="max-w-2xl mx-auto">
+        <Fragment set:html={content} />
+      </div>
+    </div>
+    <div class="container py-4 text-center">
+      <SocialShareButton
+        url={Astro.url}
+        title={article.title}
+        shareOnX={true}
+      />
+    </div>
+  </article>
+  <Footer />
 </Layout>

@@ -106,7 +106,7 @@ export async function getLatestFeaturedArticle() {
 
   const response = await getArticles(featuredArticleProps);
 
-  return response?.data[0]?.attributes;
+  return response?.data[0];
 }
 
 
@@ -179,7 +179,9 @@ export async function getArticleBySlug(slug: string) {
     headers,
   });
 
-  return await res.json();
+  const response = await res.json();
+
+  return response?.data[0];
 }
 
 export async function getSiteByDomain(domain: string) {
@@ -205,11 +207,11 @@ export async function getSiteByDomain(domain: string) {
 
   const jsonResponse = await res.json();
   const siteInfo = jsonResponse?.data[0];
-  const defaultImage = siteInfo?.attributes?.image?.data?.attributes;
+  const defaultImage = siteInfo?.image?.data;
   const site: SiteInfoProps = {
-    title: siteInfo?.attributes?.title,
-    domain: siteInfo?.attributes?.domain,
-    description: siteInfo?.attributes?.description,
+    title: siteInfo?.title,
+    domain: siteInfo?.domain,
+    description: siteInfo?.description,
     defaultImageUrl: defaultImage?.url,
     defaultImageSize: {
       height: defaultImage?.height,
