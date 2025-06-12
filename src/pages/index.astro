@@ -1,47 +1,51 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
-import SiteInfo from '../components/home-components/SiteInfo.astro';
-import ArticleCard from '../components/home-components/ArticleCard.astro';
-import FeaturedArticle from '../components/home-components/FeaturedArticle.astro';
-import {formatDate} from "../lib/api";
-import {getLatestArticles} from "../lib/strapiClient";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import SiteInfo from "../components/home-components/SiteInfo.astro";
+import ArticleCard from "../components/home-components/ArticleCard.astro";
+import FeaturedArticle from "../components/home-components/FeaturedArticle.astro";
+import { formatDate } from "../lib/api";
+import { getLatestArticles } from "../lib/strapiClient";
 
-
-const posts = await getLatestArticles('articles', 16);
+const posts = await getLatestArticles("articles");
 // console.log(' >>>> Posts: ', posts);
 ---
 
-
 <Layout>
-    <div class="wrapper">
-        <section class="py-24">
-            <SiteInfo
-                    title="Blog de Desarrollo Personal"
-                    description="Iaax Page"
-                    quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
-            />
-            <FeaturedArticle />
-            <section class="py-24">
-                <div class="container px-4 mx-auto">
-                    <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
-
-                      {posts && posts.length > 0 && posts.filter((post: any) => post?.slug).map((post: any) => (
-                              <ArticleCard
-                                      title={post.title}
-                                      content={post.overview}
-                                      slug={post.slug}
-                                      date={formatDate(post.manual_published_at)}
-                              />
-                      ))}
-
-                    </div>
-                </div>
-            </section>
-        </section>
-        <div class="py-8 flex justify-center">
-            <a href="/2" class="text-blue-800 hover:underline text-xl">&lt; Atr&aacute;s</a>
+  <div class="wrapper">
+    <section class="py-24">
+      <SiteInfo
+        title="Blog de Desarrollo Personal"
+        description="Iaax Page"
+        quote="Escucha tu voz interior • Toma las mejores decisiones para ti • Se considerado con los demás"
+      />
+      <FeaturedArticle />
+      <section class="py-24">
+        <div class="container px-4 mx-auto">
+          <div class="flex flex-wrap -mx-4 -mb-8 md:-mb-12 justify-center">
+            {
+              posts &&
+                posts.length > 0 &&
+                posts
+                  .filter((post: any) => post?.slug)
+                  .map((post: any) => (
+                    <ArticleCard
+                      title={post.title}
+                      content={post.overview}
+                      slug={post.slug}
+                      date={formatDate(post.manual_published_at)}
+                    />
+                  ))
+            }
+          </div>
         </div>
+      </section>
+    </section>
+    <div class="py-8 flex justify-center">
+      <a href="/2" class="text-blue-800 hover:underline text-xl"
+        >&lt; Atr&aacute;s</a
+      >
     </div>
-    <Footer/>
+  </div>
+  <Footer />
 </Layout>

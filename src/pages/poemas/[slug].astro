@@ -19,7 +19,11 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const poem = await getArticleBySlug(slug ?? "");
 const image = poem?.image?.data?.attributes?.formats?.large;
-const content = marked(poem?.content ?? "");
+const rawContent = poem?.content ?? "";
+const normalizedContent = rawContent
+  .replace(/\\n/g, "\n")
+  .replace(/\\r/g, "\r");
+const content = marked(normalizedContent);
 const formattedDate = formatDate(poem?.manual_published_at);
 ---
 
@@ -64,11 +68,7 @@ const formattedDate = formatDate(poem?.manual_published_at);
         <p class="text-blue-500 text-xs">{formattedDate}</p>
       </div>
     </div>
-    {
-      image?.url && (
-        <PostHero imageUrl={image.url} altText={poem?.title} />
-      )
-    }
+    {image?.url && <PostHero imageUrl={image.url} altText={poem?.title} />}
     <div class="container px-4 mx-auto">
       <article class="max-w-2xl mx-auto">
         <Fragment set:html={content} />
