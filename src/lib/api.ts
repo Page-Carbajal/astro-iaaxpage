@@ -40,11 +40,18 @@ export async function getAllPublishedPostsSlugs(categorySlug: string = 'articles
 
   const response = await getArticles(slugPayload);
 
-  const slugs = response.data.map(({attributes}: any) => {
-    return {
-      params: {slug: attributes.slug},
-    };
-  });
+  if (!response?.data) {
+    console.warn('No data returned from getArticles');
+    return [];
+  }
+
+  const slugs = response.data
+    .filter((article: any) => article?.slug)
+    .map((article: any) => {
+      return {
+        params: {slug: article.slug},
+      };
+    });
 
   return slugs;
 }

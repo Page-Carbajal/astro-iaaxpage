@@ -12,7 +12,7 @@ import {getLatestFeaturedArticle} from "../../lib/strapiClient";
 
 
 const article = await getLatestFeaturedArticle()
-const image = article?.image?.data?.attributes?.formats?.large;
+const image = article?.image.formats?.large;
 
 // console.log(' >>> Featured: ', article);
 ---
