@@ -59,9 +59,7 @@ export async function getArticles(props: GetArticlesProps) {
       }
     },
     sort: sort,
-    pagination: {
-      pageSize: STRAPI_PAGE_SIZE
-    },
+    pagination: pagination,
     populate: populate
   }
 
@@ -110,7 +108,7 @@ export async function getLatestFeaturedArticle() {
 }
 
 
-export async function getLatestArticles(categorySlug: string = 'articles', pageSize: number = STRAPI_PAGE_SIZE) {
+export async function getLatestArticles(categorySlug: string = 'articles', pageSize?: number) {
   const articlesUrl = `${STRAPI_API_URL}/articles`;
   const payload: StrapiRequestProps = {
     filters: {
@@ -122,7 +120,7 @@ export async function getLatestArticles(categorySlug: string = 'articles', pageS
       }
     },
     pagination: {
-      pageSize: pageSize
+      pageSize: pageSize ?? STRAPI_PAGE_SIZE
     },
     populate: "image",
     sort: [

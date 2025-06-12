@@ -23,9 +23,13 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const article = await getArticleBySlug(slug ?? '');
-const image = article?.image.formats?.large;
-const content = marked(article.content);
+const article = await getArticleBySlug(slug ?? "");
+const image = article?.image?.formats?.large ?? null;
+const rawContent = article.content ?? "";
+const normalizedContent = rawContent
+  .replace(/\\n/g, "\n")
+  .replace(/\\r/g, "\r");
+const content = marked(normalizedContent);
 const formattedDate = formatDate(article?.manual_published_at);
 ---
 
@@ -58,7 +62,7 @@ const formattedDate = formatDate(article?.manual_published_at);
     </div>
     <div class="container py-4 text-center">
       <SocialShareButton
-        url={Astro.url}
+        url={Astro.url.toString()}
         title={article.title}
         shareOnX={true}
       />
